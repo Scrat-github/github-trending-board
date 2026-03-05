@@ -8,10 +8,19 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    header { text-align: center; padding: 40px 0; border-bottom: 1px solid #30363d; margin-bottom: 40px; }
+    header { text-align: center; padding: 40px 0; border-bottom: 1px solid #30363d; margin-bottom: 20px; }
     h1 { font-size: 32px; color: #58a6ff; margin-bottom: 8px; }
     .subtitle { color: #8b949e; font-size: 14px; margin-bottom: 8px; }
     .update-time { color: #238636; font-size: 13px; }
+    .filter-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 16px; background: #161b22; border: 1px solid #30363d; border-radius: 6px; margin-bottom: 24px; }
+    .filter-left { display: flex; gap: 8px; }
+    .filter-right { display: flex; gap: 12px; flex-wrap: wrap; }
+    .toggle-btn { padding: 8px 16px; background: #21262d; color: #c9d1d9; border: 1px solid #30363d; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+    .toggle-btn:hover { background: #30363d; }
+    .toggle-btn.active { background: #238636; color: #fff; border-color: #238636; }
+    .filter-select { padding: 8px 12px; background: #21262d; color: #c9d1d9; border: 1px solid #30363d; border-radius: 6px; font-size: 14px; cursor: pointer; min-width: 100px; }
+    .filter-select:hover { border-color: #58a6ff; }
+    .filter-select:focus { outline: none; border-color: #238636; }
     .project-list { display: grid; gap: 16px; }
     .project-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; }
     .project-card:hover { transform: translateX(4px); border-color: #58a6ff; }
@@ -35,7 +44,7 @@
     .video-author { color: #ff6b9d; }
     footer { text-align: center; padding: 40px 0; color: #8b949e; font-size: 13px; margin-top: 40px; }
     a { color: #58a6ff; }
-    @media (max-width: 600px) { .video-item { flex-direction: column; } .video-thumbnail { width: 100%; } }
+    @media (max-width: 600px) { .filter-bar { flex-direction: column; align-items: stretch; } .filter-left, .filter-right { justify-content: space-between; } .video-item { flex-direction: column; } .video-thumbnail { width: 100%; } }
   </style>
 </head>
 <body>
@@ -43,9 +52,29 @@
     <header>
       <h1>🔥 GitHub Trending 看板</h1>
       <p class="subtitle">自动捕捉热门项目 + 📺 B 站教学视频</p>
-      <p class="update-time">更新时间：2026/3/6 01:49:21</p>
+      <p class="update-time">更新时间：2026/3/6 01:57:57</p>
     </header>
-    <main class="project-list">
+    <div class="filter-bar">
+      <div class="filter-left">
+        <button class="toggle-btn active" data-type="repo">仓库</button>
+        <button class="toggle-btn" data-type="dev">开发者</button>
+      </div>
+      <div class="filter-right">
+        <select class="filter-select" id="language-filter">
+          <option value="">语言：任何</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="TypeScript">TypeScript</option>
+          <option value="Python">Python</option>
+          <option value="other">其他</option>
+        </select>
+        <select class="filter-select" id="date-filter">
+          <option value="today">日期范围：今天</option>
+          <option value="week">本周</option>
+          <option value="month">本月</option>
+        </select>
+      </div>
+    </div>
+    <main class="project-list" id="project-list">
       
         <div class="project-card">
           <div class="project-header">
@@ -58,6 +87,29 @@
             <span class="stat">📈 <span class="stat-value">1200</span> today</span>
             <span class="stat">📝 JavaScript</span>
           </div>
+          
+            <div class="videos">
+              <div class="videos-title">📺 B 站教学视频 (2)</div>
+              <div class="video-list">
+                
+                  <a class="video-item" href="https://www.bilibili.com/video/BV1wy4y1D7JT" target="_blank">
+                    <img class="video-thumbnail" src="https://i0.hdslb.com/bfs/archive/3086cba16f49bec40a765e2320436b3b18b0bc86.jpg" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺 封面加载失败%3C/text%3E%3C/svg%3E'">
+                    <div class="video-info">
+                      <div class="video-title">尚硅谷React教程（已加更新版内容，B站最火）</div>
+                      <div class="video-meta"><span class="video-author">尚硅谷</span><span>⏱️ 2429:10</span></div>
+                    </div>
+                  </a>
+                
+                  <a class="video-item" href="https://www.bilibili.com/video/BV1pF411m7wV" target="_blank">
+                    <img class="video-thumbnail" src="https://i2.hdslb.com/bfs/archive/a18bbe3a41e02a428ecd6e5d99477bd975a79a14.jpg" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺 封面加载失败%3C/text%3E%3C/svg%3E'">
+                    <div class="video-info">
+                      <div class="video-title">30分钟学会React18核心语法 可能是你学会React最好的机会 前端开发必会框架 无废话精品视频</div>
+                      <div class="video-meta"><span class="video-author">吴悠讲编程</span><span>⏱️ 29:19</span></div>
+                    </div>
+                  </a>
+                
+              </div>
+            </div>
           
         </div>
       
@@ -73,29 +125,6 @@
             <span class="stat">📝 TypeScript</span>
           </div>
           
-            <div class="videos">
-              <div class="videos-title">📺 B 站教学视频 (2)</div>
-              <div class="video-list">
-                
-                  <a class="video-item" href="https://www.bilibili.com/video/BV1mh9NYvEwH" target="_blank">
-                    <img class="video-thumbnail" src="https://i1.hdslb.com/bfs/archive/2a5a7607f004ccb09f46679ca00a540684d3b7eb.jpg" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺 封面加载失败%3C/text%3E%3C/svg%3E'">
-                    <div class="video-info">
-                      <div class="video-title">VSCODE 使用入门 2025 版</div>
-                      <div class="video-meta"><span class="video-author">浦大宏</span><span>⏱️ 29:47</span></div>
-                    </div>
-                  </a>
-                
-                  <a class="video-item" href="https://www.bilibili.com/video/BV1ty4y1S7mC" target="_blank">
-                    <img class="video-thumbnail" src="https://i2.hdslb.com/bfs/archive/e14d4f19763708e4d6bfbf4bc23efbd4d789e157.jpg" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺 封面加载失败%3C/text%3E%3C/svg%3E'">
-                    <div class="video-info">
-                      <div class="video-title">VS Code 零基础教程 | 持续更新中</div>
-                      <div class="video-meta"><span class="video-author">兔子不吃米饭</span><span>⏱️ 160:4</span></div>
-                    </div>
-                  </a>
-                
-              </div>
-            </div>
-          
         </div>
       
         <div class="project-card">
@@ -110,29 +139,6 @@
             <span class="stat">📝 Python</span>
           </div>
           
-            <div class="videos">
-              <div class="videos-title">📺 B 站教学视频 (2)</div>
-              <div class="video-list">
-                
-                  <a class="video-item" href="https://www.bilibili.com/video/BV1cPGczXEXx" target="_blank">
-                    <img class="video-thumbnail" src="https://i0.hdslb.com/bfs/archive/9c8684dc2bb9967404364a90e37a70f35c8955a4.jpg" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺 封面加载失败%3C/text%3E%3C/svg%3E'">
-                    <div class="video-info">
-                      <div class="video-title">2025 最新 ChatGPT 教程：学会这 19 个技巧，彻底告别 AI 小白！循序渐进！</div>
-                      <div class="video-meta"><span class="video-author">黄思平 huangsiping</span><span>⏱️ 28:27</span></div>
-                    </div>
-                  </a>
-                
-                  <a class="video-item" href="https://www.bilibili.com/video/BV1As6AYREvu" target="_blank">
-                    <img class="video-thumbnail" src="https://i2.hdslb.com/bfs/archive/4d2b5cd99da2371a7ed3827a321e01dfc64583f6.jpg" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺 封面加载失败%3C/text%3E%3C/svg%3E'">
-                    <div class="video-info">
-                      <div class="video-title">目前 B 站最全最细的 ChatGPT 零基础全套教程，2024 最新版，包含所有干货！七天就能从小白到大神！少走 99% 的弯路！存下吧！很难找全的！</div>
-                      <div class="video-meta"><span class="video-author">3dmax 人物建模教学</span><span>⏱️ 318:23</span></div>
-                    </div>
-                  </a>
-                
-              </div>
-            </div>
-          
         </div>
       
     </main>
@@ -141,5 +147,77 @@
       <p style="margin-top: 8px;">每日自动更新</p>
     </footer>
   </div>
+  <script>
+    (function() {
+      const allProjects = [{"name":"facebook/react","url":"https://github.com/facebook/react","description":"The library for web and native user interfaces","stars":220500,"todayStars":1200,"language":"JavaScript","videos":[{"title":"尚硅谷React教程（已加更新版内容，B站最火）","videoId":"BV1wy4y1D7JT","author":"尚硅谷","thumbnail":"https://i0.hdslb.com/bfs/archive/3086cba16f49bec40a765e2320436b3b18b0bc86.jpg","duration":"2429:10","url":"https://www.bilibili.com/video/BV1wy4y1D7JT"},{"title":"30分钟学会React18核心语法 可能是你学会React最好的机会 前端开发必会框架 无废话精品视频","videoId":"BV1pF411m7wV","author":"吴悠讲编程","thumbnail":"https://i2.hdslb.com/bfs/archive/a18bbe3a41e02a428ecd6e5d99477bd975a79a14.jpg","duration":"29:19","url":"https://www.bilibili.com/video/BV1pF411m7wV"}]},{"name":"microsoft/vscode","url":"https://github.com/microsoft/vscode","description":"Visual Studio Code","stars":160800,"todayStars":800,"language":"TypeScript","videos":[]},{"name":"openai/chatgpt","url":"https://github.com/openai/chatgpt","description":"ChatGPT official repository","stars":95000,"todayStars":2000,"language":"Python","videos":[]}];
+      let currentType = 'repo';
+      
+      function renderProjects(projects) {
+        const container = document.getElementById('project-list');
+        if (projects.length === 0) {
+          container.innerHTML = '<p style="text-align:center;color:#8b949e;padding:40px;">暂无匹配的项目</p>';
+          return;
+        }
+        container.innerHTML = projects.map((p, i) => `
+          <div class="project-card" data-language="${p.language || 'other'}">
+            <div class="project-header">
+              <span class="rank">${i + 1}</span>
+              <a class="project-name" href="${p.url}" target="_blank">${p.name}</a>
+            </div>
+            <p class="project-desc">${p.description || '暂无描述'}</p>
+            <div class="stats">
+              <span class="stat">⭐ <span class="stat-value">${(p.stars / 1000).toFixed(0)}k</span> stars</span>
+              <span class="stat">📈 <span class="stat-value">${p.todayStars || 0}</span> today</span>
+              <span class="stat">📝 ${p.language || 'N/A'}</span>
+            </div>
+            ${p.videos && p.videos.length > 0 ? `
+              <div class="videos">
+                <div class="videos-title">📺 B 站教学视频 (${p.videos.length})</div>
+                <div class="video-list">
+                  ${p.videos.map(v => `
+                    <a class="video-item" href="${v.url}" target="_blank">
+                      <img class="video-thumbnail" src="${v.thumbnail}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺 封面加载失败%3C/text%3E%3C/svg%3E'">
+                      <div class="video-info">
+                        <div class="video-title">${v.title}</div>
+                        <div class="video-meta"><span class="video-author">${v.author}</span><span>⏱️ ${v.duration}</span></div>
+                      </div>
+                    </a>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `).join('');
+      }
+      
+      function filterProjects() {
+        const langFilter = document.getElementById('language-filter').value;
+        let filtered = [...allProjects];
+        
+        if (langFilter && langFilter !== '') {
+          if (langFilter === 'other') {
+            filtered = filtered.filter(p => !['JavaScript', 'TypeScript', 'Python'].includes(p.language));
+          } else {
+            filtered = filtered.filter(p => p.language === langFilter);
+          }
+        }
+        
+        renderProjects(filtered);
+      }
+      
+      document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          currentType = this.dataset.type;
+        });
+      });
+      
+      document.getElementById('language-filter').addEventListener('change', filterProjects);
+      document.getElementById('date-filter').addEventListener('change', filterProjects);
+      
+      renderProjects(allProjects);
+    })();
+  </script>
 </body>
 </html>

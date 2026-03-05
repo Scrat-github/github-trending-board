@@ -113,10 +113,19 @@ function generateHTML(data) {
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    header { text-align: center; padding: 40px 0; border-bottom: 1px solid #30363d; margin-bottom: 40px; }
+    header { text-align: center; padding: 40px 0; border-bottom: 1px solid #30363d; margin-bottom: 20px; }
     h1 { font-size: 32px; color: #58a6ff; margin-bottom: 8px; }
     .subtitle { color: #8b949e; font-size: 14px; margin-bottom: 8px; }
     .update-time { color: #238636; font-size: 13px; }
+    .filter-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 16px; background: #161b22; border: 1px solid #30363d; border-radius: 6px; margin-bottom: 24px; }
+    .filter-left { display: flex; gap: 8px; }
+    .filter-right { display: flex; gap: 12px; flex-wrap: wrap; }
+    .toggle-btn { padding: 8px 16px; background: #21262d; color: #c9d1d9; border: 1px solid #30363d; border-radius: 6px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+    .toggle-btn:hover { background: #30363d; }
+    .toggle-btn.active { background: #238636; color: #fff; border-color: #238636; }
+    .filter-select { padding: 8px 12px; background: #21262d; color: #c9d1d9; border: 1px solid #30363d; border-radius: 6px; font-size: 14px; cursor: pointer; min-width: 100px; }
+    .filter-select:hover { border-color: #58a6ff; }
+    .filter-select:focus { outline: none; border-color: #238636; }
     .project-list { display: grid; gap: 16px; }
     .project-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; }
     .project-card:hover { transform: translateX(4px); border-color: #58a6ff; }
@@ -140,7 +149,7 @@ function generateHTML(data) {
     .video-author { color: #ff6b9d; }
     footer { text-align: center; padding: 40px 0; color: #8b949e; font-size: 13px; margin-top: 40px; }
     a { color: #58a6ff; }
-    @media (max-width: 600px) { .video-item { flex-direction: column; } .video-thumbnail { width: 100%; } }
+    @media (max-width: 600px) { .filter-bar { flex-direction: column; align-items: stretch; } .filter-left, .filter-right { justify-content: space-between; } .video-item { flex-direction: column; } .video-thumbnail { width: 100%; } }
   </style>
 </head>
 <body>
@@ -150,7 +159,27 @@ function generateHTML(data) {
       <p class="subtitle">自动捕捉热门项目 + 📺 B 站教学视频</p>
       <p class="update-time">更新时间：${new Date(data.updatedAt).toLocaleString('zh-CN')}</p>
     </header>
-    <main class="project-list">
+    <div class="filter-bar">
+      <div class="filter-left">
+        <button class="toggle-btn active" data-type="repo">仓库</button>
+        <button class="toggle-btn" data-type="dev">开发者</button>
+      </div>
+      <div class="filter-right">
+        <select class="filter-select" id="language-filter">
+          <option value="">语言：任何</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="TypeScript">TypeScript</option>
+          <option value="Python">Python</option>
+          <option value="other">其他</option>
+        </select>
+        <select class="filter-select" id="date-filter">
+          <option value="today">日期范围：今天</option>
+          <option value="week">本周</option>
+          <option value="month">本月</option>
+        </select>
+      </div>
+    </div>
+    <main class="project-list" id="project-list">
       ${data.projects.map((p, i) => `
         <div class="project-card">
           <div class="project-header">
@@ -187,6 +216,78 @@ function generateHTML(data) {
       <p style="margin-top: 8px;">每日自动更新</p>
     </footer>
   </div>
+  <script>
+    (function() {
+      const allProjects = ${JSON.stringify(data.projects)};
+      let currentType = 'repo';
+      
+      function renderProjects(projects) {
+        const container = document.getElementById('project-list');
+        if (projects.length === 0) {
+          container.innerHTML = '<p style="text-align:center;color:#8b949e;padding:40px;">暂无匹配的项目</p>';
+          return;
+        }
+        container.innerHTML = projects.map((p, i) => \`
+          <div class="project-card" data-language="\${p.language || 'other'}">
+            <div class="project-header">
+              <span class="rank">\${i + 1}</span>
+              <a class="project-name" href="\${p.url}" target="_blank">\${p.name}</a>
+            </div>
+            <p class="project-desc">\${p.description || '暂无描述'}</p>
+            <div class="stats">
+              <span class="stat">⭐ <span class="stat-value">\${(p.stars / 1000).toFixed(0)}k</span> stars</span>
+              <span class="stat">📈 <span class="stat-value">\${p.todayStars || 0}</span> today</span>
+              <span class="stat">📝 \${p.language || 'N/A'}</span>
+            </div>
+            \${p.videos && p.videos.length > 0 ? \`
+              <div class="videos">
+                <div class="videos-title">📺 B 站教学视频 (\${p.videos.length})</div>
+                <div class="video-list">
+                  \${p.videos.map(v => \`
+                    <a class="video-item" href="\${v.url}" target="_blank">
+                      <img class="video-thumbnail" src="\${v.thumbnail}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺 封面加载失败%3C/text%3E%3C/svg%3E'">
+                      <div class="video-info">
+                        <div class="video-title">\${v.title}</div>
+                        <div class="video-meta"><span class="video-author">\${v.author}</span><span>⏱️ \${v.duration}</span></div>
+                      </div>
+                    </a>
+                  \`).join('')}
+                </div>
+              </div>
+            \` : ''}
+          </div>
+        \`).join('');
+      }
+      
+      function filterProjects() {
+        const langFilter = document.getElementById('language-filter').value;
+        let filtered = [...allProjects];
+        
+        if (langFilter && langFilter !== '') {
+          if (langFilter === 'other') {
+            filtered = filtered.filter(p => !['JavaScript', 'TypeScript', 'Python'].includes(p.language));
+          } else {
+            filtered = filtered.filter(p => p.language === langFilter);
+          }
+        }
+        
+        renderProjects(filtered);
+      }
+      
+      document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          currentType = this.dataset.type;
+        });
+      });
+      
+      document.getElementById('language-filter').addEventListener('change', filterProjects);
+      document.getElementById('date-filter').addEventListener('change', filterProjects);
+      
+      renderProjects(allProjects);
+    })();
+  </script>
 </body>
 </html>`;
 }
