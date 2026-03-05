@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "fetch": "node fetch.js",
-    "build": "node fetch.js && mkdir -p dist && cp index.html data/ dist/",
+    "build": "node fetch.js",
     "dev": "npx http-server data -p 3000"
   },
   "dependencies": {
