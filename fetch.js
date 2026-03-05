@@ -19,7 +19,24 @@ const mockTrending = [
     stars: 160800,
     todayStars: 800,
     language: 'TypeScript',
-    videos: []
+    videos: [
+      {
+        title: 'VSCODE 使用入门 2025 版',
+        videoId: 'BV1mh9NYvEwH',
+        author: '浦大宏',
+        thumbnail: 'https://i1.hdslb.com/bfs/archive/2a5a7607f004ccb09f46679ca00a540684d3b7eb.jpg',
+        duration: '29:47',
+        url: 'https://www.bilibili.com/video/BV1mh9NYvEwH'
+      },
+      {
+        title: 'VS Code 零基础教程 | 持续更新中',
+        videoId: 'BV1ty4y1S7mC',
+        author: '兔子不吃米饭',
+        thumbnail: 'https://i2.hdslb.com/bfs/archive/e14d4f19763708e4d6bfbf4bc23efbd4d789e157.jpg',
+        duration: '160:4',
+        url: 'https://www.bilibili.com/video/BV1ty4y1S7mC'
+      }
+    ]
   },
   {
     name: 'openai/chatgpt',
@@ -28,7 +45,24 @@ const mockTrending = [
     stars: 95000,
     todayStars: 2000,
     language: 'Python',
-    videos: []
+    videos: [
+      {
+        title: '2025 最新 ChatGPT 教程：学会这 19 个技巧，彻底告别 AI 小白！循序渐进！',
+        videoId: 'BV1cPGczXEXx',
+        author: '黄思平 huangsiping',
+        thumbnail: 'https://i0.hdslb.com/bfs/archive/9c8684dc2bb9967404364a90e37a70f35c8955a4.jpg',
+        duration: '28:27',
+        url: 'https://www.bilibili.com/video/BV1cPGczXEXx'
+      },
+      {
+        title: '目前 B 站最全最细的 ChatGPT 零基础全套教程，2024 最新版，包含所有干货！七天就能从小白到大神！少走 99% 的弯路！存下吧！很难找全的！',
+        videoId: 'BV1As6AYREvu',
+        author: '3dmax 人物建模教学',
+        thumbnail: 'https://i2.hdslb.com/bfs/archive/4d2b5cd99da2371a7ed3827a321e01dfc64583f6.jpg',
+        duration: '318:23',
+        url: 'https://www.bilibili.com/video/BV1As6AYREvu'
+      }
+    ]
   }
 ];
 
