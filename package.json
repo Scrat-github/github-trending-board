@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "fetch": "node fetch.js"
+    "fetch": "node fetch.js",
+    "build": "node fetch.js && cp index.html data/",
+    "dev": "npx http-server data -p 3000"
   },
   "dependencies": {
     "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
   }
 }
