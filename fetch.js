@@ -10,7 +10,24 @@ const mockTrending = [
     stars: 220500,
     todayStars: 1200,
     language: 'JavaScript',
-    videos: []
+    videos: [
+      {
+        title: '尚硅谷 React 教程（已加更新版内容，B 站最火）',
+        videoId: 'BV1wy4y1D7JT',
+        author: '尚硅谷',
+        thumbnail: 'https://i0.hdslb.com/bfs/archive/3086cba16f49bec40a765e2320436b3b18b0bc86.jpg',
+        duration: '2429:10',
+        url: 'https://www.bilibili.com/video/BV1wy4y1D7JT'
+      },
+      {
+        title: '30 分钟学会 React18 核心语法 可能是你学会 React 最好的机会 前端开发必会框架 无废话精品视频',
+        videoId: 'BV1pF411m7wV',
+        author: '吴悠讲编程',
+        thumbnail: 'https://i2.hdslb.com/bfs/archive/a18bbe3a41e02a428ecd6e5d99477bd975a79a14.jpg',
+        duration: '29:19',
+        url: 'https://www.bilibili.com/video/BV1pF411m7wV'
+      }
+    ]
   },
   {
     name: 'microsoft/vscode',
@@ -195,7 +212,14 @@ function generateHTML(data) {
     .video-author { color: #ff6b9d; }
     footer { text-align: center; padding: 40px 0; color: #8b949e; font-size: 13px; margin-top: 40px; }
     a { color: #58a6ff; }
-    @media (max-width: 600px) { .filter-bar { flex-direction: column; align-items: stretch; } .filter-left, .filter-right { justify-content: space-between; } .video-item { flex-direction: column; } .video-thumbnail { width: 100%; } }
+    @media (max-width: 600px) { 
+      .filter-bar { flex-direction: column; align-items: stretch; } 
+      .filter-left { justify-content: center; margin-bottom: 12px; }
+      .filter-right { justify-content: space-between; }
+      .filter-select { flex: 1; min-width: 80px; }
+      .video-item { flex-direction: column; } 
+      .video-thumbnail { width: 100%; } 
+    }
   </style>
 </head>
 <body>
@@ -211,6 +235,11 @@ function generateHTML(data) {
         <button class="toggle-btn" data-type="dev">开发者</button>
       </div>
       <div class="filter-right">
+        <select class="filter-select" id="spoken-filter">
+          <option value="">口语：任何</option>
+          <option value="zh">中文</option>
+          <option value="en">英文</option>
+        </select>
         <select class="filter-select" id="language-filter">
           <option value="">语言：任何</option>
           <option value="JavaScript">JavaScript</option>
@@ -305,10 +334,31 @@ function generateHTML(data) {
         \`).join('');
       }
       
+      // 判断视频是否为中文口语
+      function isChineseSpoken(videos) {
+        if (!videos || videos.length === 0) return null;
+        const chineseChars = /[\u4e00-\u9fa5]/;
+        const hasChinese = videos.some(v => chineseChars.test(v.title) || chineseChars.test(v.author));
+        return hasChinese ? 'zh' : 'en';
+      }
+      
       function filterProjects() {
+        const spokenFilter = document.getElementById('spoken-filter').value;
         const langFilter = document.getElementById('language-filter').value;
+        const dateFilter = document.getElementById('date-filter').value;
         let filtered = [...allProjects];
         
+        // 口语筛选
+        if (spokenFilter) {
+          filtered = filtered.filter(p => {
+            const spoken = isChineseSpoken(p.videos);
+            if (spokenFilter === 'zh') return spoken === 'zh';
+            if (spokenFilter === 'en') return spoken === 'en' || spoken === null;
+            return true;
+          });
+        }
+        
+        // 语言筛选
         if (langFilter && langFilter !== '') {
           if (langFilter === 'other') {
             filtered = filtered.filter(p => !['JavaScript', 'TypeScript', 'Python'].includes(p.language));
@@ -317,17 +367,33 @@ function generateHTML(data) {
           }
         }
         
+        // 日期范围筛选（模拟：根据 todayStars 判断热度）
+        if (dateFilter) {
+          const thresholds = { today: 0, week: 100, month: 500 };
+          filtered = filtered.filter(p => (p.todayStars || 0) >= thresholds[dateFilter]);
+        }
+        
         renderProjects(filtered);
       }
       
+      // 类型切换按钮
       document.querySelectorAll('.toggle-btn').forEach(btn => {
         btn.addEventListener('click', function() {
           document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
           this.classList.add('active');
           currentType = this.dataset.type;
+          // 开发者模式暂不实现，保持 UI 完整
+          if (currentType === 'dev') {
+            alert('开发者榜单功能开发中，敬请期待！');
+            this.classList.remove('active');
+            document.querySelector('[data-type="repo"]').classList.add('active');
+            currentType = 'repo';
+          }
         });
       });
       
+      // 绑定筛选事件
+      document.getElementById('spoken-filter').addEventListener('change', filterProjects);
       document.getElementById('language-filter').addEventListener('change', filterProjects);
       document.getElementById('date-filter').addEventListener('change', filterProjects);
       

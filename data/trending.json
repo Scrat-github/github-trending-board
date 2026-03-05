@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-05T18:02:45.647Z",
+  "updatedAt": "2026-03-05T18:05:33.492Z",
   "projects": [
     {
       "name": "facebook/react",
@@ -10,7 +10,7 @@
       "language": "JavaScript",
       "videos": [
         {
-          "title": "尚硅谷React教程（已加更新版内容，B站最火）",
+          "title": "尚硅谷 React 教程（已加更新版内容，B 站最火）",
           "videoId": "BV1wy4y1D7JT",
           "author": "尚硅谷",
           "thumbnail": "https://i0.hdslb.com/bfs/archive/3086cba16f49bec40a765e2320436b3b18b0bc86.jpg",
@@ -18,7 +18,7 @@
           "url": "https://www.bilibili.com/video/BV1wy4y1D7JT"
         },
         {
-          "title": "30分钟学会React18核心语法 可能是你学会React最好的机会 前端开发必会框架 无废话精品视频",
+          "title": "30 分钟学会 React18 核心语法 可能是你学会 React 最好的机会 前端开发必会框架 无废话精品视频",
           "videoId": "BV1pF411m7wV",
           "author": "吴悠讲编程",
           "thumbnail": "https://i2.hdslb.com/bfs/archive/a18bbe3a41e02a428ecd6e5d99477bd975a79a14.jpg",
