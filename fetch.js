@@ -51,7 +51,7 @@ async function fetchBilibiliVideos(query) {
       title: item.title.replace(/<[^>]+>/g, ''),
       videoId: item.bvid,
       author: item.author,
-      thumbnail: item.pic.replace('http://', 'https://'),
+      thumbnail: item.pic.startsWith('//') ? 'https:' + item.pic : item.pic.replace('http://', 'https://'),
       duration: item.duration,
       url: `https://www.bilibili.com/video/${item.bvid}`
     }));
@@ -169,7 +169,7 @@ function generateHTML(data) {
               <div class="video-list">
                 ${p.videos.map(v => `
                   <a class="video-item" href="${v.url}" target="_blank">
-                    <img class="video-thumbnail" src="${v.thumbnail}" loading="lazy" onerror="this.style.background='#30363d';this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺%3C/text%3E%3C/svg%3E'">
+                    <img class="video-thumbnail" src="${v.thumbnail}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 68%22%3E%3Crect fill=%22%2330363d%22 width=%22120%22 height=%2268%22/%3E%3Ctext fill=%22%238b949e%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2212%22%3E📺 封面加载失败%3C/text%3E%3C/svg%3E'">
                     <div class="video-info">
                       <div class="video-title">${v.title}</div>
                       <div class="video-meta"><span class="video-author">${v.author}</span><span>⏱️ ${v.duration}</span></div>
