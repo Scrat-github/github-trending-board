@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Trending 看板</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    header { text-align: center; padding: 40px 0; border-bottom: 1px solid #30363d; margin-bottom: 40px; }
+    h1 { font-size: 32px; color: #58a6ff; margin-bottom: 8px; }
+    .subtitle { color: #8b949e; font-size: 14px; margin-bottom: 8px; }
+    .update-time { color: #238636; font-size: 13px; }
+    .project-list { display: grid; gap: 16px; }
+    .project-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; }
+    .project-card:hover { transform: translateX(4px); border-color: #58a6ff; }
+    .project-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .rank { width: 32px; height: 32px; background: linear-gradient(135deg, #238636, #2ea043); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+    .project-name { font-size: 18px; font-weight: 600; color: #58a6ff; text-decoration: none; }
+    .project-name:hover { text-decoration: underline; }
+    .project-desc { color: #8b949e; font-size: 14px; margin-bottom: 12px; line-height: 1.5; }
+    .stats { display: flex; gap: 16px; flex-wrap: wrap; }
+    .stat { color: #8b949e; font-size: 13px; }
+    .stat-value { color: #c9d1d9; font-weight: 600; }
+    .videos { margin-top: 16px; padding-top: 16px; border-top: 1px solid #30363d; }
+    .videos-title { font-size: 13px; color: #ff6b9d; margin-bottom: 12px; font-weight: 600; }
+    .video-list { display: grid; gap: 8px; }
+    .video-item { display: flex; gap: 12px; padding: 10px; background: #0d1117; border-radius: 6px; text-decoration: none; color: #c9d1d9; }
+    .video-item:hover { background: #21262d; }
+    .video-thumbnail { width: 120px; height: 68px; background: #30363d; border-radius: 4px; object-fit: cover; }
+    .video-info { flex: 1; }
+    .video-title { font-size: 13px; line-height: 1.5; }
+    .video-meta { display: flex; gap: 12px; margin-top: 8px; font-size: 12px; color: #8b949e; }
+    .video-author { color: #ff6b9d; }
+    footer { text-align: center; padding: 40px 0; color: #8b949e; font-size: 13px; margin-top: 40px; }
+    a { color: #58a6ff; }
+    @media (max-width: 600px) { .video-item { flex-direction: column; } .video-thumbnail { width: 100%; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔥 GitHub Trending 看板</h1>
+      <p class="subtitle">自动捕捉热门项目 + 📺 B 站教学视频</p>
+      <p class="update-time">更新时间：2026/3/6 01:39:22</p>
+    </header>
+    <main class="project-list">
+      
+        <div class="project-card">
+          <div class="project-header">
+            <span class="rank">1</span>
+            <a class="project-name" href="https://github.com/facebook/react" target="_blank">facebook/react</a>
+          </div>
+          <p class="project-desc">The library for web and native user interfaces</p>
+          <div class="stats">
+            <span class="stat">⭐ <span class="stat-value">221k</span> stars</span>
+            <span class="stat">📈 <span class="stat-value">1200</span> today</span>
+            <span class="stat">📝 JavaScript</span>
+          </div>
+          
+            <div class="videos">
+              <div class="videos-title">📺 B 站教学视频 (2)</div>
+              <div class="video-list">
+                
+                  <a class="video-item" href="https://www.bilibili.com/video/BV1wy4y1D7JT" target="_blank">
+                    <img class="video-thumbnail" src="//i0.hdslb.com/bfs/archive/3086cba16f49bec40a765e2320436b3b18b0bc86.jpg" loading="lazy">
+                    <div class="video-info">
+                      <div class="video-title">尚硅谷React教程（已加更新版内容，B站最火）</div>
+                      <div class="video-meta"><span class="video-author">尚硅谷</span><span>⏱️ 2429:10</span></div>
+                    </div>
+                  </a>
+                
+                  <a class="video-item" href="https://www.bilibili.com/video/BV1pF411m7wV" target="_blank">
+                    <img class="video-thumbnail" src="//i2.hdslb.com/bfs/archive/a18bbe3a41e02a428ecd6e5d99477bd975a79a14.jpg" loading="lazy">
+                    <div class="video-info">
+                      <div class="video-title">30分钟学会React18核心语法 可能是你学会React最好的机会 前端开发必会框架 无废话精品视频</div>
+                      <div class="video-meta"><span class="video-author">吴悠讲编程</span><span>⏱️ 29:19</span></div>
+                    </div>
+                  </a>
+                
+              </div>
+            </div>
+          
+        </div>
+      
+        <div class="project-card">
+          <div class="project-header">
+            <span class="rank">2</span>
+            <a class="project-name" href="https://github.com/microsoft/vscode" target="_blank">microsoft/vscode</a>
+          </div>
+          <p class="project-desc">Visual Studio Code</p>
+          <div class="stats">
+            <span class="stat">⭐ <span class="stat-value">161k</span> stars</span>
+            <span class="stat">📈 <span class="stat-value">800</span> today</span>
+            <span class="stat">📝 TypeScript</span>
+          </div>
+          
+            <div class="videos">
+              <div class="videos-title">📺 B 站教学视频 (2)</div>
+              <div class="video-list">
+                
+                  <a class="video-item" href="https://www.bilibili.com/video/BV1mh9NYvEwH" target="_blank">
+                    <img class="video-thumbnail" src="//i1.hdslb.com/bfs/archive/2a5a7607f004ccb09f46679ca00a540684d3b7eb.jpg" loading="lazy">
+                    <div class="video-info">
+                      <div class="video-title">VSCODE使用入门2025版</div>
+                      <div class="video-meta"><span class="video-author">浦大宏</span><span>⏱️ 29:47</span></div>
+                    </div>
+                  </a>
+                
+                  <a class="video-item" href="https://www.bilibili.com/video/BV1ty4y1S7mC" target="_blank">
+                    <img class="video-thumbnail" src="//i2.hdslb.com/bfs/archive/e14d4f19763708e4d6bfbf4bc23efbd4d789e157.jpg" loading="lazy">
+                    <div class="video-info">
+                      <div class="video-title">VS Code 零基础教程 | 持续更新中</div>
+                      <div class="video-meta"><span class="video-author">兔子不吃米饭</span><span>⏱️ 160:4</span></div>
+                    </div>
+                  </a>
+                
+              </div>
+            </div>
+          
+        </div>
+      
+        <div class="project-card">
+          <div class="project-header">
+            <span class="rank">3</span>
+            <a class="project-name" href="https://github.com/openai/chatgpt" target="_blank">openai/chatgpt</a>
+          </div>
+          <p class="project-desc">ChatGPT official repository</p>
+          <div class="stats">
+            <span class="stat">⭐ <span class="stat-value">95k</span> stars</span>
+            <span class="stat">📈 <span class="stat-value">2000</span> today</span>
+            <span class="stat">📝 Python</span>
+          </div>
+          
+            <div class="videos">
+              <div class="videos-title">📺 B 站教学视频 (2)</div>
+              <div class="video-list">
+                
+                  <a class="video-item" href="https://www.bilibili.com/video/BV1cPGczXEXx" target="_blank">
+                    <img class="video-thumbnail" src="//i0.hdslb.com/bfs/archive/9c8684dc2bb9967404364a90e37a70f35c8955a4.jpg" loading="lazy">
+                    <div class="video-info">
+                      <div class="video-title">2025最新ChatGPT教程：学会这19个技巧，彻底告别AI小白！循序渐进！</div>
+                      <div class="video-meta"><span class="video-author">黄思平huangsiping</span><span>⏱️ 28:27</span></div>
+                    </div>
+                  </a>
+                
+                  <a class="video-item" href="https://www.bilibili.com/video/BV1As6AYREvu" target="_blank">
+                    <img class="video-thumbnail" src="//i2.hdslb.com/bfs/archive/4d2b5cd99da2371a7ed3827a321e01dfc64583f6.jpg" loading="lazy">
+                    <div class="video-info">
+                      <div class="video-title">目前B站最全最细的ChatGPT零基础全套教程，2024最新版，包含所有干货！七天就能从小白到大神！少走99%的弯路！存下吧！很难找全的！</div>
+                      <div class="video-meta"><span class="video-author">3dmax人物建模教学</span><span>⏱️ 318:23</span></div>
+                    </div>
+                  </a>
+                
+              </div>
+            </div>
+          
+        </div>
+      
+    </main>
+    <footer>
+      <p>数据来自 GitHub Trending • 视频来自 Bilibili</p>
+      <p style="margin-top: 8px;">每日自动更新</p>
+    </footer>
+  </div>
+</body>
+</html>
