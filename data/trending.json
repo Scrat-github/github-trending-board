@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-05T17:48:33.978Z",
+  "updatedAt": "2026-03-05T17:49:21.056Z",
   "projects": [
     {
       "name": "facebook/react",
@@ -17,7 +17,24 @@
       "stars": 160800,
       "todayStars": 800,
       "language": "TypeScript",
-      "videos": []
+      "videos": [
+        {
+          "title": "VSCODE使用入门2025版",
+          "videoId": "BV1mh9NYvEwH",
+          "author": "浦大宏",
+          "thumbnail": "//i1.hdslb.com/bfs/archive/2a5a7607f004ccb09f46679ca00a540684d3b7eb.jpg",
+          "duration": "29:47",
+          "url": "https://www.bilibili.com/video/BV1mh9NYvEwH"
+        },
+        {
+          "title": "VS Code 零基础教程 | 持续更新中",
+          "videoId": "BV1ty4y1S7mC",
+          "author": "兔子不吃米饭",
+          "thumbnail": "//i2.hdslb.com/bfs/archive/e14d4f19763708e4d6bfbf4bc23efbd4d789e157.jpg",
+          "duration": "160:4",
+          "url": "https://www.bilibili.com/video/BV1ty4y1S7mC"
+        }
+      ]
     },
     {
       "name": "openai/chatgpt",
