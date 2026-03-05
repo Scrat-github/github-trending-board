@@ -104,15 +104,23 @@ async function main() {
   
   console.log(`📊 Found ${trending.length} projects`);
   
-  // 为每个项目获取 B 站视频（可选，失败不影响部署）
+  // 为每个项目获取 B 站视频（可选，失败时保留 mock 数据中的视频）
   for (const project of trending) {
     const searchQuery = project.name.includes('/') 
       ? project.name.split('/')[1]
       : project.name;
     
     console.log(`📺 Fetching videos for ${searchQuery}...`);
-    project.videos = await fetchBilibiliVideos(searchQuery);
-    console.log(`   Found ${project.videos.length} videos`);
+    const fetchedVideos = await fetchBilibiliVideos(searchQuery);
+    // 只更新 videos 如果获取到了数据，否则保留 mock 数据
+    if (fetchedVideos.length > 0) {
+      project.videos = fetchedVideos;
+      console.log(`   Found ${fetchedVideos.length} videos (live)`);
+    } else if (project.videos && project.videos.length > 0) {
+      console.log(`   Using ${project.videos.length} videos from mock data`);
+    } else {
+      console.log(`   No videos available`);
+    }
   }
   
   // 确保 data 目录存在
@@ -132,6 +140,10 @@ async function main() {
   const html = generateHTML(output);
   fs.writeFileSync('data/index.html', html);
   console.log('✅ index.html generated');
+  
+  // 复制到根目录用于部署（GitHub Pages 使用根目录的 index.html）
+  fs.copyFileSync('data/index.html', 'index.html');
+  console.log('✅ index.html copied to root');
   
   console.log('🎉 Build complete!');
 }
